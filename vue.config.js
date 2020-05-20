@@ -1,4 +1,5 @@
 module.exports = {
-    publicPath: "/frontend-map",
-    outputDir: "docs"
-  };
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/frontend-map/'
+    : '/'
+}
