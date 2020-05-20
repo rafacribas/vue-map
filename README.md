@@ -1,4 +1,9 @@
-# frontend-map
+# agromap
+
+## Vue-cli setup
+```
+npm install -g @vue/cli
+```
 
 ## Project setup
 ```
