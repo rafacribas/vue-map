@@ -3,8 +3,7 @@
     <div id="nav">
       <v-tabs v-model="tab">
         <v-tab :key="1" to="/">Home</v-tab>
-        <v-tab :key="2" to="/frete">Calcule seu frete</v-tab>
-        <v-tab :key="3" to="/sobre">Sobre</v-tab>
+        <v-tab :key="2" to="/sobre">Sobre</v-tab>
       </v-tabs>
     </div>
 

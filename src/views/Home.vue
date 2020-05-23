@@ -1,14 +1,16 @@
 <template>
   <div class="container-fluid">
+    <div></div>
     <div class="row">
       <div class="col-3">
-        <BrewList 
+        <ListaProdutores
           @mouse-over-brew="mouseOverBrew"
           @mouse-left-brew="mouseLeftBrew"
-          :brews="produtores" />
+          :produtores="prode"
+        />
       </div>
       <div class="col-9">
-        <Mapa :produtores="produtores" />
+        <Mapa :produtores="prode" />
       </div>
     </div>
   </div>
@@ -16,37 +18,60 @@
 
 <script>
 import Mapa from "../components/Mapa";
-import BrewList from "../components/BrewList";
-import axios from "axios";
+import ListaProdutores from "../components/ListaProdutores";
+import prodd from "../assets/produtores.json";
 
 export default {
   name: "Home",
-  components: { Mapa, BrewList },
+  components: { Mapa, ListaProdutores },
   data: function() {
     return {
-      produtores: [],
-      normalIcon: [50,50],
-      largeIcon: [90,90]
+      prode: prodd,
+      produtores1: [{}],
+      normalIcon: [50, 50],
+      largeIcon: [85, 85]
     };
   },
   mounted: function() {
-    axios.get("https://api.openbrewerydb.org/breweries").then(r => {
-      this.produtores = r.data.filter(r => r.state =='Arizona').map(r => {
-        r.iconSize = this.normalIcon;
-        return r;
-      });
+    var i = -1;
+    var b = [];
+
+    this.prode.forEach(function(prod) {
+      i++;
+      var a = [];
+      a = prod.Coordenadas.split(",");
+      var aLat = a[0].trim();
+      var aLong = a[1].trim();
+      b.push({ i, aLat, aLong });
     });
+
+    var cont = 0;
+
+    console.log(b);
+    for (var x = 0; x < this.prode.length; x++) {
+      this.prode[cont].lat = b[cont].aLat;
+      this.prode[cont].long = b[cont].aLong;
+      this.prode[cont].iconSize = this.normalIcon;
+      //console.log(this.prode[cont].lat +" and cont: "+ cont);
+      cont++;
+    }
+
+    console.log(this.prode);
   },
   methods: {
-    mouseOverBrew: function(index){
-      
-      console.log(index + "mouse entrou e icon icon:" + this.produtores[index].iconSize )
-       this.produtores[index].iconSize = this.largeIcon; 
+    mouseOverBrew: function(index) {
+      console.log(
+        index + "mouse entrou e icon icon:" + this.prode[index].iconSize
+      );
+      this.prode[index].iconSize = this.largeIcon;
+      console.log(this.prode[index].iconSize);
     },
-    mouseLeftBrew: function(index){
-      
-      console.log(index + "mouse saiu e icon icon:" + this.produtores[index].iconSize )
-      this.produtores[index].iconSize = this.normalIcon; 
+    mouseLeftBrew: function(index) {
+      console.log(
+        index + "mouse saiu e icon icon:" + this.prode[index].iconSize
+      );
+      this.prode[index].iconSize = this.normalIcon;
+      console.log(this.prode[index].iconSize)
     }
   }
 };
@@ -54,5 +79,4 @@ export default {
 
 
 <style lang="scss" scoped>
-
 </style>
