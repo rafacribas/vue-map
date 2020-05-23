@@ -1,4 +1,4 @@
-# agromap
+# Reactive map of local farmers
 
 ## Vue-cli setup
 ```
